@@ -1,3 +1,4 @@
 *.cache
 *.bak
+composer.lock
 /vendor/
