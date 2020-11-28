@@ -1,6 +1,6 @@
 <?php
 
-namespace LuizHenriqueBK\LaravelAcl\Tests;
+namespace LuizHenriqueFerreira\LaravelAcl\Tests;
 
 use Illuminate\Support\Facades\Schema;
 

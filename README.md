@@ -11,7 +11,7 @@ Laravel Acl is a PHP package for Laravel Framework, used for manipulation of acc
 1) Type next command in your terminal:
 
 ```bash
-composer require LuizHenriqueBK/LaravelAcl
+composer require luizhenriqueferreira/LaravelAcl
 ```
 
 2) Add the service provider to your config/app.php file in section providers:
@@ -21,7 +21,7 @@ composer require LuizHenriqueBK/LaravelAcl
 ```php
 'providers' => [
     // ...
-    LuizHenriqueBK\LaravelAcl\LaravelAclServiceProvider::class,
+    LuizHenriqueFerreira\LaravelAcl\LaravelAclServiceProvider::class,
     // ...
 ],
 ```
@@ -39,7 +39,7 @@ php artisan migrate
 ```php
 // ...
 
-use LuizHenriqueBK\LaravelAcl\Models\Traits\HasRoles;
+use LuizHenriqueFerreira\LaravelAcl\Models\Traits\HasRoles;
  
 class User extends Authenticatable
 {

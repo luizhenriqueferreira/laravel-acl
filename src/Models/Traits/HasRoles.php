@@ -1,10 +1,10 @@
 <?php
 
-namespace LuizHenriqueBK\LaravelAcl\Models\Traits;
+namespace LuizHenriqueFerreira\LaravelAcl\Models\Traits;
 
 use Illuminate\Support\Arr;
-use LuizHenriqueBK\LaravelAcl\Models\Role;
-use LuizHenriqueBK\LaravelAcl\Models\Permission;
+use LuizHenriqueFerreira\LaravelAcl\Models\Role;
+use LuizHenriqueFerreira\LaravelAcl\Models\Permission;
 
 trait HasRoles
 {

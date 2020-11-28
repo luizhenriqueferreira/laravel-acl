@@ -1,6 +1,6 @@
 <?php
 
-namespace LuizHenriqueBK\LaravelAcl\Models;
+namespace LuizHenriqueFerreira\LaravelAcl\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +8,7 @@ use Illuminate\Support\Arr;
 
 /**
  * Class Role
- * @package LuizHenriqueBK\LaravelAcl\Models
+ * @package LuizHenriqueFerreira\LaravelAcl\Models
  */
 class Role extends Model
 {
