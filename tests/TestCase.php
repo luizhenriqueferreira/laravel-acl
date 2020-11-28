@@ -1,8 +1,8 @@
 <?php
 
-namespace LuizHenriqueBK\LaravelAcl\Tests;
+namespace LuizHenriqueFerreira\LaravelAcl\Tests;
 
-use LuizHenriqueBK\LaravelAcl\LaravelAclServiceProvider;
+use LuizHenriqueFerreira\LaravelAcl\LaravelAclServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {

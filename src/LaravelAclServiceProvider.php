@@ -1,6 +1,6 @@
 <?php
 
-namespace LuizHenriqueBK\LaravelAcl;
+namespace LuizHenriqueFerreira\LaravelAcl;
 
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Blade;
@@ -12,7 +12,7 @@ use Illuminate\Support\ServiceProvider;
 /**
  * Class LaravelAclServiceProvider
  *
- * @package LuizHenriqueBK\LaravelAcl
+ * @package LuizHenriqueFerreira\LaravelAcl
  */
 class LaravelAclServiceProvider extends ServiceProvider
 {

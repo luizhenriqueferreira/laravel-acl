@@ -1,6 +1,6 @@
 <?php
 
-namespace LuizHenriqueBK\LaravelAcl\Middleware;
+namespace LuizHenriqueFerreira\LaravelAcl\Middleware;
 
 use Closure;
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace LuizHenriqueBK\LaravelAcl\Tests\Models;
+namespace LuizHenriqueFerreira\LaravelAcl\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use LuizHenriqueBK\LaravelAcl\Models\Permission;
-use LuizHenriqueBK\LaravelAcl\Models\Role;
-use LuizHenriqueBK\LaravelAcl\Models\User;
+use LuizHenriqueFerreira\LaravelAcl\Models\Permission;
+use LuizHenriqueFerreira\LaravelAcl\Models\Role;
+use LuizHenriqueFerreira\LaravelAcl\Models\User;
 
 class RoleTest extends ModelsTest
 {

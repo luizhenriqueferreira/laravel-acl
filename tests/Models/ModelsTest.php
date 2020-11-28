@@ -1,8 +1,8 @@
 <?php
 
-namespace LuizHenriqueBK\LaravelAcl\Tests\Models;
+namespace LuizHenriqueFerreira\LaravelAcl\Tests\Models;
 
-use LuizHenriqueBK\LaravelAcl\Tests\TestCase;
+use LuizHenriqueFerreira\LaravelAcl\Tests\TestCase;
 
 abstract class ModelsTest extends TestCase
 {

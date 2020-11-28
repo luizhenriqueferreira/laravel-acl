@@ -1,6 +1,6 @@
 <?php
 
-namespace LuizHenriqueBK\LaravelAcl\Models;
+namespace LuizHenriqueFerreira\LaravelAcl\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
