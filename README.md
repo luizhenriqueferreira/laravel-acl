@@ -11,7 +11,7 @@ Laravel Acl is a PHP package for Laravel Framework, used for manipulation of acc
 1) Type next command in your terminal:
 
 ```bash
-composer require luizhenriqueferreira/LaravelAcl
+composer require luizhenriqueferreira/Laravel-acl
 ```
 
 2) Add the service provider to your config/app.php file in section providers:
