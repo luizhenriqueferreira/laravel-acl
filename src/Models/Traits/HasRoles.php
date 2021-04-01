@@ -6,6 +6,11 @@ use Illuminate\Support\Arr;
 use LuizHenriqueFerreira\LaravelAcl\Models\Role;
 use LuizHenriqueFerreira\LaravelAcl\Models\Permission;
 
+/**
+ * Trait HasRoles
+ *
+ * @package LuizHenriqueFerreira\LaravelAcl\Models\Traits
+ */
 trait HasRoles
 {
     #########################
@@ -13,13 +18,13 @@ trait HasRoles
     #########################
 
     /**
-     * A user may have multiple roles.
+     * A model may have multiple roles.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class)->with(['permissions']);
+        return $this->morphToMany(Role::class, 'roleable')->with(['permissions']);
     }
 
     #########################
@@ -42,12 +47,12 @@ trait HasRoles
      * @param  mixed $roles
      * @return boolean
      */
-    public function hasRole(...$roles)
+    public function hasRoles(...$roles)
     {
         $roles = Arr::flatten($roles);
         foreach ($roles as $role) {
-            $name = $role instanceof Role ? $role->name : $role;
-            return $this->roles->contains('name', $name);
+            $slug = $role instanceof Role ? $role->slug : $role;
+            return $this->roles->contains('slug', $slug);
         }
 
         return false;
@@ -59,12 +64,12 @@ trait HasRoles
      * @param  mixed  $permissions
      * @return boolean
      */
-    public function hasPermission(...$permissions)
+    public function hasPermissions(...$permissions)
     {
         $permissions = Arr::flatten($permissions);
         foreach ($permissions as $permission) {
-            $name = $permission instanceof Permission ? $permission->name : $permission;
-            return $this->permissions()->contains('name', $name);
+            $slug = $permission instanceof Permission ? $permission->slug : $permission;
+            return $this->permissions()->contains('slug', $slug);
         }
 
         return false;
@@ -76,14 +81,15 @@ trait HasRoles
       * @param mixed  $roles
       * @return $this
       */
-    public function attachRole(...$roles)
+    public function attachRoles(...$roles)
     {
         $roles = Arr::flatten($roles);
-        foreach ($roles as $role) {
-            $role = $role instanceof Role ? $role : Role::whereIdOrName($role, $role)->first();
 
-            if ($role && !$this->roles->contains('name', $role->name)) {
-                $this->roles()->attach($role->id);
+        foreach ($roles as $role) {
+            $role = $role instanceof Role ? $role : Role::whereIdOrSlug($role, $role)->first();
+
+            if ($role && !$this->roles->contains('slug', $role->slug)) {
+                $this->roles()->attach($role);
             }
         }
 
@@ -96,14 +102,14 @@ trait HasRoles
      * @param mixed  $roles
      * @return $this
      */
-    public function detachRole(...$roles)
+    public function detachRoles(...$roles)
     {
         if (count($roles)) {
-            $permissions = Arr::flatten($permissions);
+            $roles = Arr::flatten($roles);
             foreach ($roles as $role) {
-                $role = $role instanceof Role ? $role : Role::whereIdOrName($role, $role)->first();
+                $role = $role instanceof Role ? $role : Role::whereIdOrSlug($role, $role)->first();
 
-                if ($role && $this->roles->contains('name', $role->name)) {
+                if ($role && $this->roles->contains('slug', $role->slug)) {
                     $this->roles()->detach($role->id);
                 }
             }
@@ -125,7 +131,7 @@ trait HasRoles
         $sync = [];
         $roles = Arr::flatten($roles);
         foreach ($roles as $role) {
-            $role = $role instanceof Role ? $role : Role::whereIdOrName($role, $role)->first();
+            $role = $role instanceof Role ? $role : Role::whereIdOrSlug($role, $role)->first();
             $sync[] = $role->id;
         }
 

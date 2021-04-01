@@ -15,7 +15,7 @@ class MigrationTest extends TestCase
     {
         $this->migrate();
 
-        foreach (['users', 'roles', 'role_user', 'permissions', 'permission_role'] as $table) {
+        foreach (['users', 'roles', 'roleables', 'permissions', 'permission_role'] as $table) {
             $this->assertTrue(Schema::hasTable($table), "The table [$table] not found in the database.");
         }
     }

@@ -4,6 +4,8 @@ namespace LuizHenriqueFerreira\LaravelAcl\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Collection;
 use LuizHenriqueFerreira\LaravelAcl\Models\Permission;
 use LuizHenriqueFerreira\LaravelAcl\Models\Role;
 use LuizHenriqueFerreira\LaravelAcl\Models\User;
@@ -27,15 +29,8 @@ class UserTest extends ModelsTest
     /** @var $roleAttributes */
     protected $roleAttributes = [
         'title'       => 'Administrator',
-        'name'        => 'administrador',
+        'slug'        => 'administrador',
         'description' => 'Administrator role description.',
-    ];
-
-    /** @var $permissionAttributes */
-    protected $permissionAttributes = [
-        'title'       => 'Create users',
-        'name'        => 'users.create',
-        'description' => 'Allow to create users',
     ];
 
     /* ------------------------------------------------------------------------------------------------
@@ -74,37 +69,58 @@ class UserTest extends ModelsTest
     }
 
     /** @test */
-    public function itCanAttachRole()
+    public function itHasRelationships()
+    {
+        $rolesRelationship = $this->model->roles();
+        $role = $rolesRelationship->getRelated();
+
+        $this->assertInstanceOf(MorphToMany::class, $rolesRelationship);
+        $this->assertInstanceOf(Role::class, $role);
+    }
+
+    /** @test */
+    public function itCanAttachRoles()
     {
         $role = (new Role)->create($this->roleAttributes);
 
         $user = (new User)->fill($this->attributes);
         $user->save();
-        $user->syncRoles($role);
+        $user->attachRoles($role)->load('roles');
 
         $this->assertEquals($user->roles->first()->title, $role->title);
-        $this->assertEquals($user->roles->first()->name, $role->name);
+        $this->assertEquals($user->roles->first()->slug, $role->slug);
         $this->assertEquals($user->roles->first()->description, $role->description);
     }
 
     /** @test */
-    public function itCanAttachRoleAndPermission()
+    public function itCanSynchRoles()
     {
-        $permission = (new Permission)->create($this->permissionAttributes);
-
-        $role       = (new Role)->create($this->roleAttributes);
-        $role->syncPermissions($permission);
+        $role = (new Role)->create($this->roleAttributes);
 
         $user = (new User)->fill($this->attributes);
         $user->save();
-        $user->syncRoles($role);
+        $user->syncRoles($role)->load('roles');
 
         $this->assertEquals($user->roles->first()->title, $role->title);
-        $this->assertEquals($user->roles->first()->name, $role->name);
+        $this->assertEquals($user->roles->first()->slug, $role->slug);
+        $this->assertEquals($user->roles->first()->description, $role->description);
+    }
+
+    /** @test */
+    public function itCanDetachRoles()
+    {
+        $role = (new Role)->create($this->roleAttributes);
+
+        $user = (new User)->fill($this->attributes);
+        $user->save();
+        $user->attachRoles($role)->load('roles');
+
+        $this->assertEquals($user->roles->first()->title, $role->title);
+        $this->assertEquals($user->roles->first()->slug, $role->slug);
         $this->assertEquals($user->roles->first()->description, $role->description);
 
-        $this->assertEquals($user->permissions()->first()->title, $permission->title);
-        $this->assertEquals($user->permissions()->first()->name, $permission->name);
-        $this->assertEquals($user->permissions()->first()->description, $permission->description);
+        $user->detachRoles($role)->load('roles');
+
+        $this->assertEquals(0, $user->roles->count());
     }
 }

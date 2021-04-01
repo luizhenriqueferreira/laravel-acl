@@ -16,7 +16,7 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next, ...$roles)
     {
-        if (($user = $request->user()) && $user->hasRole(...$roles)) {
+        if (($user = $request->user()) && $user->hasRoles(...$roles)) {
             return $next($request);
         }
 

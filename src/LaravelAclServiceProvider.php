@@ -3,11 +3,14 @@
 namespace LuizHenriqueFerreira\LaravelAcl;
 
 use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use LuizHenriqueFerreira\LaravelAcl\Models\Role;
+use LuizHenriqueFerreira\LaravelAcl\Models\Permission;
 
 /**
  * Class LaravelAclServiceProvider
@@ -36,6 +39,11 @@ class LaravelAclServiceProvider extends ServiceProvider
         $this->initPermissions();
         $this->initMiddlewares();
         $this->initDirectives();
+
+        Relation::morphMap([
+            'Role' => Role::class,
+            'Permission' => Permission::class,
+        ]);
     }
 
     /**
@@ -59,9 +67,9 @@ class LaravelAclServiceProvider extends ServiceProvider
             return;
         }
 
-        DB::table('permissions')->get(['name'])->map(function ($permission) {
-            Gate::define($permission->name, function ($user) use ($permission) {
-                return $user->hasPermission($permission->name);
+        DB::table('permissions')->get(['slug'])->map(function ($permission) {
+            Gate::define($permission->slug, function ($user) use ($permission) {
+                return $user->hasPermissions($permission->slug);
             });
         });
     }
@@ -84,13 +92,13 @@ class LaravelAclServiceProvider extends ServiceProvider
      */
     protected function initDirectives()
     {
-        Blade::directive('hasrole', function ($role) {
-            return "<?php if (auth()->check() && auth()->user()->hasRole({$role})) : ?>";
+        Blade::directive('hasroles', function ($role) {
+            return "<?php if (auth()->check() && auth()->user()->hasRoles({$role})) : ?>";
         });
-        Blade::directive('elsehasrole', function ($role) {
+        Blade::directive('elsehasroles', function ($role) {
             return "<?php elseif ($role): ?>";
         });
-        Blade::directive('endhasrole', function () {
+        Blade::directive('endhasroles', function () {
             return "<?php endif; ?>";
         });
     }

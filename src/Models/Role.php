@@ -8,38 +8,25 @@ use Illuminate\Support\Arr;
 
 /**
  * Class Role
+ *
  * @package LuizHenriqueFerreira\LaravelAcl\Models
  */
 class Role extends Model
 {
+    use Traits\HasSlug;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'title', 'name', 'description'
+        'title', 'slug', 'description'
     ];
 
     #########################
     ####  RELATIONSHIPS  ####
     #########################
-
-    /**
-     * A user can be applied to roles.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function users()
-    {
-        $model = config('auth.providers.users.model');
-
-        if (! class_exists($model)) {
-            throw new Exception("User class {$model} not found!", 1);
-        }
-
-        return $this->belongsToMany($model);
-    }
 
     /**
      * A permission can be applied to roles.
@@ -61,14 +48,14 @@ class Role extends Model
      * @param mixed  $permissions
      * @return $this
      */
-    public function attachPermission(...$permissions)
+    public function attachPermissions(...$permissions)
     {
         $permissions = Arr::flatten($permissions);
         foreach ($permissions as $permission) {
-            $permission = $permission instanceof Permission ? $permission : Permission::whereIdOrName($permission, $permission)->first();
+            $permission = $permission instanceof Permission ? $permission : Permission::whereIdOrSlug($permission, $permission)->first();
 
-            if ($permission && !$this->permissions->contains('name', $permission->name)) {
-                $this->permissions()->attach($$permission->id);
+            if ($permission && !$this->permissions->contains('slug', $permission->slug)) {
+                $this->permissions()->attach($permission->id);
             }
         }
 
@@ -81,15 +68,15 @@ class Role extends Model
      * @param mixed  $permissions
      * @return $this
      */
-    public function detachPermission(...$permissions)
+    public function detachPermissions(...$permissions)
     {
         if (count($permissions)) {
             $permissions = Arr::flatten($permissions);
             foreach ($permissions as $permission) {
-                $permission = $permission instanceof Permission ? $permission : Permission::whereIdOrName($permission, $permission)->first();
+                $permission = $permission instanceof Permission ? $permission : Permission::whereIdOrSlug($permission, $permission)->first();
 
-                if ($permission && $this->permissions->contains('name', $permission->name)) {
-                    $this->permissions()->detach($$permission->id);
+                if ($permission && $this->permissions->contains('slug', $permission->slug)) {
+                    $this->permissions()->detach($permission->id);
                 }
             }
         } else {
@@ -110,7 +97,7 @@ class Role extends Model
         $sync = [];
         $permissions = Arr::flatten($permissions);
         foreach ($permissions as $permission) {
-            $permission = $permission instanceof Permission ? $permission : Permission::whereIdOrName($permission, $permission)->first();
+            $permission = $permission instanceof Permission ? $permission : Permission::whereIdOrSlug($permission, $permission)->first();
             $sync[] = $permission->id;
         }
 

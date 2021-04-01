@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * Class User
+ *
+ * @package LuizHenriqueFerreira\LaravelAcl\Models
+ */
 class User extends Authenticatable
 {
     use SoftDeletes, Traits\HasRoles;

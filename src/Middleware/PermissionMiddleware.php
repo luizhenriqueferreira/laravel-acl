@@ -16,7 +16,7 @@ class PermissionMiddleware
      */
     public function handle($request, Closure $next, ...$permissions)
     {
-        if (($user = $request->user()) && $user->hasPermission(...$permissions)) {
+        if (($user = $request->user()) && $user->hasPermissions(...$permissions)) {
             return $next($request);
         }
 
