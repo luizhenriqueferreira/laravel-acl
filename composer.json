@@ -1,7 +1,6 @@
 {
     "name": "luizhenriqueferreira/laravel-acl",
     "description": "ACL package for Laravel",
-    "version": "1.0",
     "type": "package",
     "keywords": [
         "Luiz Henrique ferreira",
@@ -29,10 +28,10 @@
     ],
     "require": {
         "php": "^7.2.5",
-        "illuminate/container": "^5.8|^6.0|^7.0|^8.0",
-        "illuminate/contracts": "^5.8|^6.0|^7.0|^8.0",
-        "illuminate/database": "^5.8|^6.0|^7.0|^8.0",
-        "illuminate/support": "^5.8|^6.0|^7.0|^8.0"
+        "illuminate/container": "^6.20|^7.0|^8.0",
+        "illuminate/contracts": "^6.20|^7.0|^8.0",
+        "illuminate/database": "^6.20|^7.0|^8.0",
+        "illuminate/support": "^6.20|^7.0|^8.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
