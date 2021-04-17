@@ -53,150 +53,150 @@ class User extends Authenticatable
 
 Check role
 ```php
-if ($user->hasRole('admin')) {
+if ($user->hasRoles'('admin')) {
     // User is admin
 }
 // or
-if ($user->hasRole('admin', 'writer')) {
+if ($user->hasRoles('admin', 'writer')) {
     // User is admin or writer
 }
 // or
-if ($user->hasRole(['admin', 'writer'])) {
+if ($user->hasRoles(['admin', 'writer'])) {
     // User is admin or writer
 }
 ```
 
 Attach role 
 ```php
-$user->attachRole(1);
+$user->attachRoles(1);
 
 //or
-$user->attachRole('admin');
+$user->attachRoles('admin');
 
 //or
-$user->attachRole(Role::find(1));
+$user->attachRoles(Role::find(1));
 
 //or
-$user->attachRole(1, 2);
+$user->attachRoles(1, 2);
 
 //or
-$user->attachRole('admin', 'writer');
+$user->attachRoles('admin', 'writer');
 
 //or
-$user->attachRole(Role::find(1), Role::find(2));
+$user->attachRoles(Role::find(1), Role::find(2));
 
 //or
-$user->attachRole(1, 'writer', Role::find(3));
+$user->attachRoles(1, 'writer', Role::find(3));
 
 //or
-$user->attachRole([1]);
+$user->attachRoles([1]);
 
 //or
-$user->attachRole(['admin']);
+$user->attachRoles(['admin']);
 
 //or
-$user->attachRole([Role::find(1)]);
+$user->attachRoles([Role::find(1)]);
 
 //or
-$user->attachRole([1, 2]);
+$user->attachRoles([1, 2]);
 
 //or
-$user->attachRole(['admin', 'writer']);
+$user->attachRoles(['admin', 'writer']);
 
 //or
-$user->attachRole([Role::find(1), Role::find(2)]);
+$user->attachRoles([Role::find(1), Role::find(2)]);
 
 //or
-$user->attachRole([1, 'writer', Role::find(3)]);
+$user->attachRoles([1, 'writer', Role::find(3)]);
 
 ```
 
 The same function, Detach role
 ```php
-$user->detachRole('writer');
+$user->detachRoles('writer');
 // ...
-$user->detachRole(2, 'writer', Role::find(2));
+$user->detachRoles(2, 'writer', Role::find(2));
 // ...
-$user->detachRole([2, 'writer', Role::find(2)]);
+$user->detachRoles([2, 'writer', Role::find(2)]);
 ```
 
 Clear all roles
 ```php
-$user->detachRole();
+$user->detachRoles();
 ```
 
 Check permission
 ```php
-if ($user->hasPermission('create-post')) {
+if ($user->hasPermissions('create-post')) {
     // User has permission "create post"
 }
 // or
-if ($user->hasPermission('create-post', 'update-post')) {
+if ($user->hasPermissions('create-post', 'update-post')) {
     // User has permission "create post" or "update post"
 }
 // or
-if ($user->hasPermission(['create-post', 'update-post'])) {
+if ($user->hasPermissions(['create-post', 'update-post'])) {
     // User has permission "create post" or "update post"
 }
 ```
 
 Attach permissions
 ```php
-$role->attachPermission(1);
+$role->attachPermissions(1);
 
 //or
-$role->attachPermission('create-post');
+$role->attachPermissions('create-post');
 
 //or
-$role->attachPermission(Permission::find(1));
+$role->attachPermissions(Permission::find(1));
 
 //or
-$role->attachPermission(1, 2);
+$role->attachPermissions(1, 2);
 
 //or
-$role->attachPermission('create-post', 'update-post');
+$role->attachPermissions('create-post', 'update-post');
 
 //or
-$role->attachPermission(Permission::find(1), Permission::find(2));
+$role->attachPermissions(Permission::find(1), Permission::find(2));
 
 //or
-$role->attachPermission(1, 'update-post', Permission::find(3));
+$role->attachPermissions(1, 'update-post', Permission::find(3));
 
 //or
-$role->attachPermission([1]);
+$role->attachPermissions([1]);
 
 //or
-$role->attachPermission(['create-post']);
+$role->attachPermissions(['create-post']);
 
 //or
-$role->attachPermission([Permission::find(1)]);
+$role->attachPermissions([Permission::find(1)]);
 
 //or
-$role->attachPermission([1, 2]);
+$role->attachPermissions([1, 2]);
 
 //or
-$role->attachPermission(['create-post', 'update-post']);
+$role->attachPermissions(['create-post', 'update-post']);
 
 //or
-$role->attachPermission([Permission::find(1), Permission::find(2)]);
+$role->attachPermissions([Permission::find(1), Permission::find(2)]);
 
 //or
-$role->attachPermission([1, 'update-post', Permission::find(3)]);
+$role->attachPermissions([1, 'update-post', Permission::find(3)]);
 
 ```
 
 The same function, Detach permissions
 ```php
-$role->detachPermission('create-post');
+$role->detachPermissions('create-post');
 // ...
-$role->detachPermission(1, 'update-post', Permission::find(3));
+$role->detachPermissions(1, 'update-post', Permission::find(3));
 // ...
-$role->detachPermission([1, 'update-post', Permission::find(3)]);
+$role->detachPermissions([1, 'update-post', Permission::find(3)]);
 ```
 
 Clear all permissions
 ```php
-$role->detachPermission();
+$role->detachPermissions();
 ```
 
 See the code for more information... =)
@@ -209,9 +209,9 @@ You also can use directives to verify the currently logged in user has any roles
 Check roles:
 
  ```blade
- @role('admin')
+ @hasroles('admin')
     <!-- User has role admin -->
- @elserole('writer')   
+ @elsehasrole('writer')   
     <!-- User has role writer -->
     <!-- ... -->
  @else
@@ -222,9 +222,9 @@ Check roles:
 or check more roles in one directive:
 
 ```blade
- @role(['admin', 'writer'])
+ @hasroles(['admin', 'writer'])
     <!-- User has next roles: admin, writer -->
- @endrole
+ @endhasrole
 ```
 
 Check permissions:
